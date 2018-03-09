@@ -13,6 +13,7 @@ namespace HierarhyPlot
         public string PodIzvor { get; set; }
         public int Kod { get; set; }
         public int Znak { get; set; }
+        public bool isProccesed { get; set; }
 
         public List<StavkaVrska> GetList(string filePath)
         {
@@ -30,7 +31,8 @@ namespace HierarhyPlot
                     Stavka = n.SelectSingleNode("Stavka").InnerText,
                     PodIzvor = n.SelectSingleNode("podIzvor").InnerText,
                     Znak = 1,
-                    Kod = Convert.ToInt32(n.SelectSingleNode("Kod").InnerText)
+                    Kod = Convert.ToInt32(n.SelectSingleNode("Kod").InnerText),
+                    isProccesed = false
                     
                 };
 
