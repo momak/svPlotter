@@ -28,10 +28,10 @@ namespace HierarhyPlot
             {
                 StavkaVrska _sv = new StavkaVrska
                 {
-                    Stavka = n.SelectSingleNode("Stavka").InnerText,
-                    PodIzvor = n.SelectSingleNode("podIzvor").InnerText,
+                    Stavka = n.SelectSingleNode("Stavka").InnerText.Trim(),
+                    PodIzvor = n.SelectSingleNode("podIzvor").InnerText.Trim(),
                     Znak = 1,
-                    Kod = Convert.ToInt32(n.SelectSingleNode("Kod").InnerText),
+                    Kod = Convert.ToInt32(n.SelectSingleNode("Kod").InnerText.Trim()),
                     isProccesed = false
                     
                 };

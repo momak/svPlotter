@@ -48,9 +48,12 @@ namespace HierarhyPlot
             GetStavki();
 
 
-            //string s = "L8";
-            //tvVrski.Nodes.Add(ChildNodes(s));
-          //return;
+            string s = "A9";
+            tvVrski.Nodes.Add(ChildNodes(s));
+
+            s = "L8";
+            tvVrski.Nodes.Add(ChildNodes(s));
+            return;
             
             tvVrski.Nodes.Clear();
 
