@@ -26,12 +26,23 @@ namespace HierarhyPlot
 
             foreach (Stavka s in _lstS)
             {
-                    lsRes.Clear();
-                    ChildNodes(s.eKod, _lstStavkaVrska);
-                    _lstStavka.Add(SumRes(s.eKod, lsRes));
+                lsRes.Clear();
+                ChildNodes(s.eKod, _lstStavkaVrska);
+                _lstStavka.Add(SumRes(s, lsRes));
             }
-            
+
             dataGridView1.DataSource = _lstStavka;
+
+
+            const string srcConnectionString = @"Data Source=""E:\\vs2017\\svPloter\\eOFIdata.db"";Version=3;";
+            const string destConnectionString = @"Data Source=""E:\\vs2017\\svPloter\\eOFIdataBck.db"";Version=3;";
+
+            var backup = new SqliteBackup();
+
+            using (var unsubscriber = backup.Subscribe(new ConsoleWriterObserver()))
+                backup.Execute(srcConnectionString, destConnectionString, 50);
+
+            Console.ReadLine();
         }
 
         private List<Stavka> Hplot()
@@ -41,7 +52,7 @@ namespace HierarhyPlot
 
             List<Stavka> _lstStavka = new List<Stavka>();
 
-            string connStr = "Data Source = E:\\vs2017\\eOFI\\eOFI\\bin\\Debug\\Config\\Data\\eOFIdata.db; Version = 3;";
+            string connStr = "Data Source = E:\\vs2017\\svPloter\\eOFIdata.db; Version = 3;";
             //System.Data.SQLite.SQLiteConnection.CreateFile("Data Source = Config\\Data\\eOFIdata.db; Version = 3;");
             using (System.Data.SQLite.SQLiteConnection con = new System.Data.SQLite.SQLiteConnection(connStr))
             {
@@ -77,7 +88,7 @@ namespace HierarhyPlot
 
             List<Stavka> _lstStavka = new List<Stavka>();
 
-            string connStr = "Data Source = E:\\vs2017\\eOFI\\eOFI\\bin\\Debug\\Config\\Data\\eOFIdata.db; Version = 3;";
+            string connStr = "Data Source = E:\\vs2017\\svPloter\\eOFIdata.db; Version = 3;";
             //System.Data.SQLite.SQLiteConnection.CreateFile("Data Source = Config\\Data\\eOFIdata.db; Version = 3;");
             using (System.Data.SQLite.SQLiteConnection con = new System.Data.SQLite.SQLiteConnection(connStr))
             {
@@ -110,9 +121,9 @@ namespace HierarhyPlot
             ofiObj ofiO = new ofiObj();
             ofiO.e_kod = eKod;
             string dataQuery =
-                $"SELECT eKod,  PocSost, steknuvanjeSo, namaluvanjeSo, promeniKR, promeniC, promeniO, KrajSost FROM  ofiData AS ofi WHERE ofi.eKod = '{eKod}' and ofi.IKODnbrm = '1230310007'   AND ofi.Datum = '2017-09-30'    AND ofi.rpt = 'OFI1'";
+                $"SELECT eKod, PocSost, steknuvanjeSo, namaluvanjeSo, promeniKR, promeniC, promeniO, KrajSost FROM  ofiData AS ofi WHERE ofi.eKod = '{eKod}' and ofi.IKODnbrm = '1230310007'   AND ofi.Datum = '2017-09-30'    AND ofi.rpt = 'OFI1'";
 
-            string connStr = "Data Source = E:\\vs2017\\eOFI\\eOFI\\bin\\Debug\\Config\\Data\\eOFIdata.db; Version = 3;";
+            string connStr = "Data Source = E:\\vs2017\\svPloter\\eOFIdata.db; Version = 3;";
             //System.Data.SQLite.SQLiteConnection.CreateFile("Data Source = Config\\Data\\eOFIdata.db; Version = 3;");
             using (System.Data.SQLite.SQLiteConnection con = new System.Data.SQLite.SQLiteConnection(connStr))
             {
@@ -174,10 +185,11 @@ namespace HierarhyPlot
             return String.IsNullOrEmpty(value) ? null : (int.Parse(value) as int?);
         }
 
-        private ofiObj SumRes(string s, List<ofiObj> lsRes)
+        private ofiObj SumRes(Stavka s, List<ofiObj> lsRes)
         {
             ofiObj ofiRes = new ofiObj();
-            ofiRes.e_kod = s;
+            ofiRes.e_kod = s.eKod;
+            ofiRes.Opis = s.Vrska;
             foreach (ofiObj o in lsRes)
             {
                 ofiRes.Sum(o);

@@ -18,7 +18,7 @@ namespace HierarhyPlot
 
         public override string ToString()
         {
-            return $"{eKod}, {Vrska}, {Kod}";
+            return $"{eKod}, {Vrska}, {Kod}, {isProccesed}";
         }
     }
 }

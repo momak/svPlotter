@@ -10,6 +10,8 @@ namespace HierarhyPlot
     {
         public string e_kod { get; set; }
 
+        public string Opis { get; set; }
+
         public decimal PocSostojba { get; set; }
 
         public decimal SteknuvanjeSO { get; set; }
@@ -37,7 +39,7 @@ namespace HierarhyPlot
 
         public override string ToString()
         {
-            return $"{e_kod}, {PocSostojba}, {SteknuvanjeSO}, {NamaluvanjeSO}, {PromeniKR}, {PromeniC}, {PromeniO}, {KrajSostojba}";
+            return $"{e_kod}, {Opis}, {PocSostojba}, {SteknuvanjeSO}, {NamaluvanjeSO}, {PromeniKR}, {PromeniC}, {PromeniO}, {KrajSostojba}";
         }
     }
 }
